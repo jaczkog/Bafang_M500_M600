@@ -1,0 +1,11 @@
+services:
+  loginbypass:
+    image: ${DOCKER_REGISTRY}/loginbypass:${LOGINBYPASS_VERSION:-latest}
+    build:
+        context: .
+        tags: [ "${DOCKER_REGISTRY}/loginbypass:${LOGINBYPASS_VERSION}", "${DOCKER_REGISTRY}/loginbypass:latest" ]
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.loginbypass.rule=Host(`api.besst.bafang-service.com`) || Host(`test.api.besst.bafang-service.com`) || Host(`eu-central-1.api.besst.bafang-service.com`) || Host(`bafang-besst.oss-cn-shanghai.aliyuncs.com`)"
+      - "traefik.http.services.loginbypass.loadbalancer.server.port=80"

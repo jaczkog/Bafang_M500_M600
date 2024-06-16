@@ -1,0 +1,11 @@
+build_loginbypass:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - cd BESST/loginbypass
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --driver docker-container --use
+    - docker compose build --pull --push loginbypass
+    - docker buildx rm

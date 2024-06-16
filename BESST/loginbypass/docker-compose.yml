@@ -1,0 +1,9 @@
+services:
+  loginbypass:
+    image: ${DOCKER_REGISTRY}/loginbypass:${LOGINBYPASS_VERSION:-latest}
+    build:
+        context: .
+        tags: [ "${DOCKER_REGISTRY}/loginbypass:${LOGINBYPASS_VERSION}", "${DOCKER_REGISTRY}/loginbypass:latest" ]
+    ports:
+      - "${LOGINBYPASS_PORT:-80}:80"
+    restart: unless-stopped
